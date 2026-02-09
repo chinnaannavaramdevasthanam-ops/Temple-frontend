@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
+
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
@@ -24,7 +25,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
+
       <Navbar />
 
       <div className="container-fluid mt-4">
@@ -58,33 +60,26 @@ function App() {
 
           {/* ADMIN (NESTED LAYOUT) */}
           <Route
-            path="/admin"
-            element={
-              <ProtectedRoute admin>
-                <AdminLayout />
-              </ProtectedRoute>
-            }
-          >
-            <Route
-  path="/admin/users"
+  path="/admin"
   element={
     <ProtectedRoute admin>
-      <AdminUsers />
+      <AdminLayout />
     </ProtectedRoute>
   }
-/>
-
-            <Route index element={<AdminDashboard />} />
-            <Route path="sevas" element={<AdminSevas />} />
-            <Route path="gallery" element={<AdminGallery />} />
-            <Route path="bookings" element={<AdminBookings />} />
-          </Route>
+>
+  <Route index element={<AdminDashboard />} />
+  <Route path="users" element={<AdminUsers />} />
+  <Route path="sevas" element={<AdminSevas />} />
+  <Route path="gallery" element={<AdminGallery />} />
+  <Route path="bookings" element={<AdminBookings />} />
+</Route>
 
         </Routes>
       </div>
 
       <Footer />
-    </BrowserRouter>
+    </HashRouter>
+
   );
 }
 
