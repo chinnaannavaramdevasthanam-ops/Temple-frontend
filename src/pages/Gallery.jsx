@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
+import "./Gallery.css"; 
 
 export default function Gallery() {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState(null); 
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -20,35 +22,72 @@ export default function Gallery() {
     fetchImages();
   }, []);
 
-  if (loading) {
-    return <p className="text-center">Loading gallery...</p>;
-  }
-
-  if (images.length === 0) {
-    return <p className="text-center">No images uploaded yet</p>;
-  }
-
   return (
-    <>
-      <h3 className="mb-4 text-center">Temple Gallery</h3>
-
-      <div className="row">
-        {images.map(img => (
-          <div className="col-md-4 col-sm-6 mb-4" key={img.id}>
-            <img
-              src={img.imageUrl}   
-              alt="Temple"
-              loading="lazy"
-              className="img-fluid rounded shadow-sm"
-              style={{
-                height: 220,
-                width: "100%",
-                objectFit: "cover"
-              }}
-            />
+    <div className="gallery-page-wrapper">
+      <div className="container py-5">
+        
+        {/* --- HEADER --- */}
+        <div className="text-center mb-5">
+          <h1 className="devotional-header">Divine Gallery</h1>
+          <div className="header-divider">
+            <span className="om-symbol">ॐ</span>
           </div>
-        ))}
+          <p className="devotional-subtitle">
+            Glimpses of divine moments, celebrations, and the sacred beauty of the temple.
+          </p>
+        </div>
+
+        {/* --- LOADING STATE --- */}
+        {loading && (
+          <div className="text-center py-5">
+            <div className="spinner-border text-warning" role="status"></div>
+            <p className="mt-3 text-muted">Loading sacred images...</p>
+          </div>
+        )}
+
+        {/* --- EMPTY STATE --- */}
+        {!loading && images.length === 0 && (
+          <div className="text-center py-5">
+            <p className="text-muted">No images uploaded to the gallery yet.</p>
+          </div>
+        )}
+
+        {/* --- MASONRY GRID (Pinterest Style) --- */}
+        {!loading && images.length > 0 && (
+          <div className="gallery-masonry">
+            {images.map((img) => (
+              <div 
+                className="gallery-item" 
+                key={img.id} 
+                onClick={() => setSelectedImage(img)}
+              >
+                <div className="image-frame">
+                  <img
+                    src={img.imageUrl}
+                    alt="Temple Event"
+                    loading="lazy"
+                    className="gallery-img"
+                  />
+                  <div className="overlay">
+                    <span className="view-text">View Full Size</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* --- MODAL (POPUP) FOR FULL VIEW --- */}
+        {selectedImage && (
+          <div className="gallery-modal" onClick={() => setSelectedImage(null)}>
+            <div className="modal-content-wrapper" onClick={(e) => e.stopPropagation()}>
+              <button className="close-btn" onClick={() => setSelectedImage(null)}>×</button>
+              <img src={selectedImage.imageUrl} alt="Full View" className="full-size-img" />
+            </div>
+          </div>
+        )}
+
       </div>
-    </>
+    </div>
   );
 }

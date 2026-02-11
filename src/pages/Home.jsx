@@ -1,97 +1,87 @@
+import { Link } from "react-router-dom";
+import "./Home.css"; 
+
 export default function Home() {
   return (
-    <>
-      {/* WELCOME STRIP */}
-      <div
-        className="text-center text-white py-3 mb-4"
-        style={{ background: "#1f3556" }}
-      >
-        <h4 className="mb-0">
-          WELCOME TO SRI SATYANARAYANA SWAMY TEMPLE
-        </h4>
+    <div className="home-page-wrapper">
+      
+      {/* 1. Welcome Strip */}
+      <div className="welcome-strip">
+        <h4>|| OM NAMO NARAYANAYA ||</h4>
       </div>
 
-      {/* HERO TEMPLES */}
-      <div className="row mb-5 text-center">
-        {[
-          { img: "/home/img1.jpg", name: "" },
-          { img: "/home/img2.jpg", name: "" },
-          
-        ].map((t, i) => (
-          <div className="col-md-4 mb-3" key={i}>
-            <div className="position-relative">
-              <img
-                src={t.img}
-                className="img-fluid rounded"
-                alt={t.name}
-              />
-              <div
-                className="position-absolute bottom-0 w-100 text-white py-2"
-                style={{ background: "rgba(0,0,0,0.6)" }}
-              >
-                {t.name}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* POPULAR SEVAS */}
-      <h4 className="text-center mb-4">POPULAR SEVAS</h4>
-
-      <div className="row text-center mb-4">
-        {[
-          { img: "/home/archana.jpg", name: "ARCHANA" },
-          { img: "/home/abhishekam.jpg", name: "ABHISHEKAM" },
-          { img: "/home/satyanarayana.jpg", name: "SATYANARAYANA PUJA" }
-        ].map((s, i) => (
-          <div className="col-md-4 mb-3" key={i}>
-            <img
-              src={s.img}
-              alt={s.name}
-              className="img-fluid rounded-circle mb-2"
-              style={{
-                width: 160,
-                height: 160,
-                objectFit: "cover"
-              }}
-            />
-            <h6>{s.name}</h6>
-          </div>
-        ))}
-      </div>
-
-      <div className="text-center mb-5">
-        <a href="/sevas" className="btn btn-outline-secondary">
-          VIEW MORE SEVAS
-        </a>
-      </div>
-
-      {/* TEMPLE HISTORY */}
-      <div
-        className="row align-items-center text-white p-4 mb-5 rounded"
-        style={{ background: "#1f3556" }}
-      >
-        <div className="col-md-4 mb-3">
+      {/* 2. Hero Section */}
+      <section className="hero-section">
+        <div className="hero-frame">
           <img
-            src="/home/history.jpg"
-            alt="Temple History"
-            className="img-fluid rounded"
+            src="/home/img1.png"
+            alt="Sri Satyanarayana Swamy Temple"
+            className="hero-image"
           />
+          <div className="hero-overlay-text">
+            <h1>Sri Satyanarayana Swamy Temple</h1>
+            <p>Sanctuary of Peace & Devotion</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Decorative Divider */}
+      <div className="section-divider">
+        <span className="om-symbol">ॐ</span>
+      </div>
+
+      {/* 3. Popular Sevas */}
+      <section className="popular-sevas-section">
+        <h2 className="devotional-title">✦ Popular Sevas ✦</h2>
+        <p className="section-subtitle">Participate in sacred rituals and seek blessings</p>
+
+        <div className="popular-sevas-grid">
+          {[
+            { img: "/home/archana.jpg", name: "Archana" },
+            { img: "/home/abhishekam.jpg", name: "Abhishekam" },
+            { img: "/home/satyanarayana.jpg", name: "Satyanarayana Vratam" },
+          ].map((s, i) => (
+            <div className="seva-card" key={i}>
+              <div className="img-container">
+                <img src={s.img} alt={s.name} className="seva-image" />
+              </div>
+              <div className="seva-name">{s.name}</div>
+            </div>
+          ))}
         </div>
 
-        <div className="col-md-8">
-          <h4>TEMPLE HISTORY</h4>
-          <p>
-            Established in 1985, Sri Maha Lakshmi Temple has been a
-            cornerstone of spiritual and community life, attracting
-            devotees from across the region.
-          </p>
-          <a href="/history" className="btn btn-light">
-            VIEW FULL TEMPLE HISTORY
-          </a>
+        <div className="view-more-wrapper">
+          <Link to="/sevas" className="gold-btn">
+            View All Sevas
+          </Link>
         </div>
-      </div>
-    </>
+      </section>
+
+      {/* 4. History Preview Section */}
+      <section className="history-preview-section">
+        <div className="history-card-home">
+          <div className="history-content">
+            <h3 className="history-title">Temple History</h3>
+            <div className="divider-small"></div>
+            <p>
+              Established with divine blessings, the <strong>Sri Satyanarayana Swamy Temple</strong>, 
+              affectionately known as "Chinna Annavaram," stands as a beacon of faith. 
+              Founded by Sri Suresh Kondeti, it serves as a spiritual haven for thousands...
+            </p>
+            <Link to="/history" className="read-more-btn">
+              Read Full History
+            </Link>
+          </div>
+          <div className="history-image-wrapper">
+             <img
+              src="/home/history.jpg"
+              alt="Temple History"
+              className="history-preview-img"
+            />
+          </div>
+        </div>
+      </section>
+
+    </div>
   );
 }

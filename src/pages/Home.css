@@ -1,0 +1,272 @@
+/* ================= IMPORT FONTS ================= */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;1,400&display=swap');
+
+/* ================= PAGE WRAPPER ================= */
+.home-page-wrapper {
+  width: 100%;
+  background-color: #fdfbf7; 
+  background-image: radial-gradient(#ffe0b2 1px, transparent 1px);
+  background-size: 20px 20px;
+  overflow-x: hidden;
+  padding-bottom: 40px;
+}
+
+/* ================= WELCOME STRIP ================= */
+.welcome-strip {
+  background: #8B0000; 
+  color: #f5c542;
+  text-align: center;
+  padding: 12px 0;
+  border-bottom: 3px solid #f5c542;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.welcome-strip h4 {
+  margin: 0;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-size: 1.2rem;
+}
+
+/* ================= HERO SECTION ================= */
+.hero-section {
+  position: relative;
+  width: 100%;
+  height: 80vh; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.hero-frame {
+  width: 100%;
+  height: 100%;
+  max-width: 1400px;
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  border: 2px solid #f5c542;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-overlay-text {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(to top, rgba(6, 26, 58, 0.9), transparent);
+  padding: 40px 20px;
+  text-align: center;
+  color: white;
+}
+
+.hero-overlay-text h1 {
+  font-family: 'Cinzel', serif;
+  font-size: 2.5rem;
+  color: #f5c542;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  margin-bottom: 10px;
+}
+
+.hero-overlay-text p {
+  font-family: 'Lora', serif;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+}
+
+/* ================= SEVAS SECTION ================= */
+.section-divider {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.om-symbol {
+  font-size: 3rem;
+  color: #d35400; 
+}
+
+.popular-sevas-section {
+  padding: 20px 20px 60px;
+  text-align: center;
+}
+
+.devotional-title {
+  font-family: 'Cinzel', serif;
+  font-size: 2.2rem;
+  color: #8B0000;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.section-subtitle {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  color: #555;
+  margin-bottom: 50px;
+}
+
+.popular-sevas-grid {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.seva-card {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  border: 1px solid #ffe0b2;
+  transition: transform 0.3s ease;
+  width: 300px;
+}
+
+.seva-card:hover {
+  transform: translateY(-10px);
+  border-color: #f5c542;
+}
+
+.img-container {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  border: 4px solid #f5c542;
+  padding: 5px;
+  background: white;
+}
+
+.seva-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.seva-name {
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #061a3a;
+  border-top: 1px solid #eee;
+  padding-top: 15px;
+}
+
+/* ================= BUTTONS ================= */
+.gold-btn {
+  display: inline-block;
+  margin-top: 40px;
+  padding: 12px 40px;
+  background: linear-gradient(45deg, #f5c542, #ffb300);
+  color: #061a3a;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 50px;
+  box-shadow: 0 4px 15px rgba(245, 197, 66, 0.4);
+  transition: all 0.3s ease;
+}
+
+.gold-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(245, 197, 66, 0.6);
+}
+
+/* ================= HISTORY PREVIEW ================= */
+.history-preview-section {
+  padding: 60px 20px;
+  background-color: #fff;
+  border-top: 2px solid #f5c542;
+  border-bottom: 2px solid #f5c542;
+}
+
+.history-card-home {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  background: #fffaf0;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.history-content {
+  flex: 1;
+  text-align: left;
+}
+
+.history-title {
+  font-family: 'Cinzel', serif;
+  color: #8B0000;
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+.divider-small {
+  width: 60px;
+  height: 3px;
+  background: #f5c542;
+  margin-bottom: 20px;
+}
+
+.history-content p {
+  font-family: 'Lora', serif;
+  line-height: 1.8;
+  color: #444;
+  margin-bottom: 30px;
+  font-size: 1.1rem;
+}
+
+.read-more-btn {
+  color: #8B0000;
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 2px solid #8B0000;
+  padding-bottom: 2px;
+  transition: all 0.2s;
+}
+
+.read-more-btn:hover {
+  color: #d35400;
+  border-color: #d35400;
+}
+
+.history-image-wrapper {
+  flex: 1;
+}
+
+.history-preview-img {
+  width: 100%;
+  border-radius: 10px;
+  border: 5px solid white;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 992px) {
+  .hero-overlay-text h1 { font-size: 2rem; }
+  .history-card-home { flex-direction: column-reverse; text-align: center; }
+  .history-content { text-align: center; }
+  .divider-small { margin: 0 auto 20px; }
+}
+
+@media (max-width: 768px) {
+  .hero-section { height: 60vh; }
+  .hero-overlay-text h1 { font-size: 1.5rem; }
+  .devotional-title { font-size: 1.8rem; }
+  .seva-card { width: 100%; }
+}

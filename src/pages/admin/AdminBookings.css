@@ -1,0 +1,154 @@
+/* ================= VARIABLES ================= */
+:root {
+  --deep-red: #8B0000;
+  --gold: #f5c542;
+  --gold-light: #fff3cd;
+  --dark-blue: #061a3a;
+  --cream-bg: #fdfbf7;
+  --font-title: 'Cinzel', serif;
+  --font-text: 'Lato', sans-serif;
+}
+
+/* ================= PAGE STRUCTURE ================= */
+.admin-page-wrapper {
+  background-color: white;
+  min-height: 100%;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.admin-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 15px;
+}
+
+.admin-page-title {
+  font-family: var(--font-title);
+  color: var(--dark-blue);
+  font-weight: 700;
+  margin: 0;
+}
+
+.admin-subtitle {
+  color: #666;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.admin-loading {
+  text-align: center;
+  padding: 50px;
+  color: var(--gold);
+}
+
+.text-gold {
+  color: var(--gold) !important;
+}
+
+/* ================= TABLE DESIGN ================= */
+.table-container {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.devotional-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-text);
+  min-width: 800px; 
+}
+
+.devotional-table thead {
+  background-color: var(--dark-blue);
+  color: var(--gold);
+}
+
+.devotional-table th {
+  padding: 15px;
+  text-align: left;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.devotional-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  color: #333;
+  vertical-align: middle;
+}
+
+.devotional-table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.text-primary-blue {
+  color: var(--dark-blue);
+}
+
+.seva-name-cell {
+  color: var(--deep-red);
+  font-weight: 600;
+}
+
+/* ================= BADGES ================= */
+.status-badge {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-block;
+}
+
+.status-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.status-warning {
+  background-color: var(--gold-light);
+  color: #856404;
+  border: 1px solid #ffeeba;
+}
+
+.status-secondary {
+  background-color: #e2e3e5;
+  color: #383d41;
+  border: 1px solid #d6d8db;
+}
+
+/* ================= BUTTONS ================= */
+.gold-btn-outline {
+  background: transparent;
+  border: 2px solid var(--gold);
+  color: #d35400;
+  padding: 8px 20px;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.gold-btn-outline:hover {
+  background: var(--gold);
+  color: white;
+}
+
+/* ================= EMPTY STATE ================= */
+.empty-state-admin {
+  text-align: center;
+  padding: 40px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  color: #777;
+  font-style: italic;
+}

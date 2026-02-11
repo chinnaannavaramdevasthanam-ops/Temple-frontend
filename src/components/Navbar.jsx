@@ -1,33 +1,35 @@
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
-import {
-  FaVolumeUp,
-  FaVolumeMute,
-  FaBars,
-  FaTimes
-} from "react-icons/fa";
+import { FaVolumeUp, FaVolumeMute, FaBars, FaTimes } from "react-icons/fa";
+import "./Navbar.css";
 
 export default function Navbar() {
   const token = localStorage.getItem("token");
-  const role = localStorage.getItem("role"); // ADMIN or USER
+  const role = localStorage.getItem("role");
   const navigate = useNavigate();
 
   const audioRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  /* AUTOPLAY AUDIO @ 50% */
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = 0.5;
-      audioRef.current.play().catch(() => {});
-    }
+    const playAudio = async () => {
+      if (audioRef.current) {
+        audioRef.current.volume = 0.4;
+        try {
+          await audioRef.current.play();
+          setIsPlaying(true);
+        } catch (err) {
+          console.log("Autoplay prevented. User interaction required.");
+          setIsPlaying(false);
+        }
+      }
+    };
+    playAudio();
   }, []);
 
   const toggleAudio = () => {
-    if (!audioRef.current) return;
     if (audioRef.current.paused) {
-      audioRef.current.volume = 0.5;
       audioRef.current.play();
       setIsPlaying(true);
     } else {
@@ -39,208 +41,92 @@ export default function Navbar() {
   const logout = () => {
     localStorage.clear();
     navigate("/");
+    setMenuOpen(false);
   };
 
   return (
     <>
-      {/* AUDIO */}
       <audio ref={audioRef} loop>
-        <source src="/om-namo-lakshmi-namah.mp3" type="audio/mpeg" />
+        <source src="/audio/om-namo-lakshmi-namah.mp3" type="audio/mpeg" />
       </audio>
 
-      {/* NAVBAR */}
-      <nav style={styles.navbar}>
-        <div style={styles.container}>
-
-          {/* LOGO */}
-          <Link to="/" style={styles.brand}>
-            <img src="/home/temple-logo.png" alt="Temple Logo" style={styles.logo} />
-            <span style={styles.title}>
-              Sri Satyanarayana Swamy Temple
-            </span>
+      <nav className="temple-navbar">
+        <div className="nav-container">
+          
+          {/* --- LEFT: LOGO & NAME --- */}
+          <Link to="/" className="nav-brand" onClick={() => setMenuOpen(false)}>
+            <img src="/home/temple-logo.png" alt="Temple Logo" />
+            <div className="brand-text">
+              <span className="brand-title">Sri Satyanarayana</span>
+              <span className="brand-subtitle">Swamy Temple</span>
+            </div>
           </Link>
 
-          {/* MOBILE ICON */}
-          <button
-            style={styles.menuIcon}
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            {menuOpen ? <FaTimes /> : <FaBars />}
-          </button>
+          {/* --- CENTER: LINKS --- */}
+          <div className={`nav-menu-wrapper ${menuOpen ? "active" : ""}`}>
+            <ul className="nav-links">
+              <NavItem to="/" label="Home" closeMenu={() => setMenuOpen(false)} />
+              <NavItem to="/donate" label="Donate" closeMenu={() => setMenuOpen(false)} />
+              <NavItem to="/sevas" label="Seva Booking" closeMenu={() => setMenuOpen(false)} />
+              <NavItem to="/gallery" label="Gallery" closeMenu={() => setMenuOpen(false)} />
+              
+              {token && role === "ADMIN" && (
+                <NavItem to="/admin" label="Admin" closeMenu={() => setMenuOpen(false)} />
+              )}
+            </ul>
 
-          {/* MENU */}
-          <ul
-            style={{
-              ...styles.menu,
-              ...(menuOpen ? styles.menuMobileOpen : {})
-            }}
-          >
-            {/* SOUND */}
-            <li>
-              <button onClick={toggleAudio} style={styles.soundBtn}>
-                {isPlaying ? <FaVolumeUp /> : <FaVolumeMute />}
-              </button>
-            </li>
+            {/* Mobile-Only Auth/Audio Controls */}
+            <div className="mobile-controls">
+               <button className="sound-btn mobile-only" onClick={toggleAudio}>
+                  {isPlaying ? <FaVolumeUp /> : <FaVolumeMute />} <span>{isPlaying ? "Mute" : "Unmute"}</span>
+               </button>
+               {!token ? (
+                <Link to="/login" className="auth-btn mobile-only" onClick={() => setMenuOpen(false)}>Login</Link>
+               ) : (
+                <button className="logout-btn mobile-only" onClick={logout}>Logout</button>
+               )}
+            </div>
+          </div>
 
-            <NavItem to="/" label="Home" setMenuOpen={setMenuOpen} />
-            <NavItem to="/donate" label="Donate" setMenuOpen={setMenuOpen} />
-            <NavItem to="/sevas" label="Seva Booking" setMenuOpen={setMenuOpen} />
-            <NavItem to="/gallery" label="Gallery" setMenuOpen={setMenuOpen} />
+          {/* --- RIGHT: ACTIONS (Desktop) --- */}
+          <div className="nav-actions">
+            <button className="sound-btn desktop-only" onClick={toggleAudio}>
+              {isPlaying ? <FaVolumeUp /> : <FaVolumeMute />}
+            </button>
 
-            {/* ADMIN PANEL LINK */}
-            {token && role === "ADMIN" && (
-              <NavItem
-                to="/admin"
-                label="Admin Panel"
-                setMenuOpen={setMenuOpen}
-              />
-            )}
-
-            {/* AUTH */}
             {!token ? (
-              <li>
-                <NavLink
-                  to="/login"
-                  style={styles.authBtn}
-                  onClick={() => setMenuOpen(false)}
-                >
-                  Login / Signup
-                </NavLink>
-              </li>
+              <NavLink to="/login" className="auth-btn desktop-only">
+                Login / Signup
+              </NavLink>
             ) : (
-              <li>
-                <button
-                  onClick={() => {
-                    logout();
-                    setMenuOpen(false);
-                  }}
-                  style={styles.logoutBtn}
-                >
-                  Logout
-                </button>
-              </li>
+              <button className="logout-btn desktop-only" onClick={logout}>
+                Logout
+              </button>
             )}
-          </ul>
+
+            {/* Hamburger Toggle */}
+            <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
+              {menuOpen ? <FaTimes /> : <FaBars />}
+            </button>
+          </div>
+
         </div>
       </nav>
     </>
   );
 }
 
-/* NAV ITEM */
-function NavItem({ to, label, setMenuOpen }) {
+function NavItem({ to, label, closeMenu }) {
   return (
     <li>
       <NavLink
         to={to}
-        end
-        onClick={() => setMenuOpen(false)}
-        style={({ isActive }) => ({
-          ...styles.link,
-          ...(isActive ? styles.activeLink : {})
-        })}
+        end={to === "/"}
+        onClick={closeMenu}
+        className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
       >
         {label}
       </NavLink>
     </li>
   );
-}
-
-/* STYLES */
-const styles = {
-  navbar: {
-    background: "linear-gradient(90deg, #061a3a, #0b2a5b)",
-    padding: "14px 0",
-    boxShadow: "0 2px 6px rgba(0,0,0,0.4)",
-    position: "relative"
-  },
-  container: {
-    maxWidth: "1200px",
-    margin: "0 auto",
-    padding: "0 24px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between"
-  },
-  brand: {
-    display: "flex",
-    alignItems: "center",
-    gap: "12px",
-    textDecoration: "none"
-  },
-  logo: {
-    height: "44px"
-  },
-  title: {
-    color: "#f5c542",
-    fontSize: "18px",
-    fontWeight: "600"
-  },
-  menuIcon: {
-    display: "none",
-    background: "transparent",
-    border: "none",
-    color: "#ffffff",
-    fontSize: "22px",
-    cursor: "pointer"
-  },
-  menu: {
-    listStyle: "none",
-    display: "flex",
-    alignItems: "center",
-    gap: "26px",
-    margin: 0,
-    padding: 0
-  },
-  menuMobileOpen: {
-    position: "absolute",
-    top: "100%",
-    left: 0,
-    right: 0,
-    background: "#061a3a",
-    flexDirection: "column",
-    padding: "20px",
-    gap: "18px"
-  },
-  link: {
-    color: "#ffffff",
-    textDecoration: "none",
-    fontSize: "14px",
-    letterSpacing: "1px",
-    textTransform: "uppercase",
-    paddingBottom: "6px"
-  },
-  activeLink: {
-    borderBottom: "3px solid #f5c542"
-  },
-  soundBtn: {
-    background: "transparent",
-    border: "none",
-    color: "#ffffff",
-    fontSize: "18px",
-    cursor: "pointer"
-  },
-  authBtn: {
-    padding: "6px 14px",
-    border: "1px solid #f5c542",
-    borderRadius: "20px",
-    color: "#f5c542",
-    textDecoration: "none",
-    fontSize: "13px"
-  },
-  logoutBtn: {
-    padding: "6px 14px",
-    border: "1px solid #f5c542",
-    borderRadius: "20px",
-    background: "transparent",
-    color: "#f5c542",
-    fontSize: "13px",
-    cursor: "pointer"
-  }
-};
-
-/* MEDIA QUERY */
-if (window.innerWidth <= 768) {
-  styles.menuIcon.display = "block";
-  styles.menu.display = "none";
 }

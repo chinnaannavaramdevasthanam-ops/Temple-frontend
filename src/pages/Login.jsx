@@ -1,6 +1,7 @@
 import { useState } from "react";
 import api from "../services/api";
 import { useNavigate, Link } from "react-router-dom";
+import "./Login.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -8,11 +9,12 @@ export default function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault(); 
     setError("");
 
     if (!email || !password) {
-      setError("Please enter email and password");
+      setError("Please enter valid email and password.");
       return;
     }
 
@@ -34,50 +36,80 @@ export default function Login() {
       const message = err.response?.data?.message;
 
       if (status === 404) {
-        setError("User not found");
+        setError("User account not found.");
       } else if (status === 401) {
-        setError("Incorrect password");
+        setError("Incorrect password. Please try again.");
       } else {
-        setError(message || "Login failed");
+        setError(message || "Login failed due to server error.");
       }
     }
   };
 
   return (
-    <div className="col-md-4 mx-auto mt-4">
-      <h3 className="mb-3 text-center">Login</h3>
-
-      {error && (
-        <div className="alert alert-danger py-2">
-          {error}
-          {error === "User not found" && (
-            <div className="mt-2">
-              <Link to="/register" className="small">
-                New user? Register here
-              </Link>
-            </div>
-          )}
+    <div className="login-page-wrapper">
+      <div className="login-card shadow-lg">
+        
+        {/* --- HEADER --- */}
+        <div className="text-center mb-4">
+          <h2 className="devotional-title-small">Welcome Back</h2>
+          <div className="divider-om">
+            <span className="om-symbol-small">ॐ</span>
+          </div>
+          <p className="login-subtitle">Login to access Seva bookings</p>
         </div>
-      )}
 
-      <input
-        className="form-control mb-2"
-        placeholder="Email"
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-      />
+        {/* --- ERROR MESSAGE --- */}
+        {error && (
+          <div className="devotional-alert">
+            {error}
+            {error.includes("not found") && (
+              <div className="mt-2">
+                <Link to="/register" className="alert-link">
+                  New user? <strong>Register here</strong>
+                </Link>
+              </div>
+            )}
+          </div>
+        )}
 
-      <input
-        className="form-control mb-3"
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-      />
+        {/* --- FORM --- */}
+        <form onSubmit={handleLogin}>
+          <div className="form-group mb-3">
+            <label className="input-label">Email Address</label>
+            <input
+              className="devotional-input"
+              placeholder="Enter your email"
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+            />
+          </div>
 
-      <button className="btn btn-danger w-100" onClick={handleLogin}>
-        Login
-      </button>
+          <div className="form-group mb-4">
+            <label className="input-label">Password</label>
+            <input
+              className="devotional-input"
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+            />
+          </div>
+
+          <button type="submit" className="gold-btn-solid w-100">
+            Login
+          </button>
+        </form>
+
+        {/* --- FOOTER LINKS --- */}
+        <div className="text-center mt-4 login-footer">
+          <p>Don't have an account?</p>
+          <Link to="/register" className="register-link">
+            Create New Account
+          </Link>
+        </div>
+
+      </div>
     </div>
   );
 }

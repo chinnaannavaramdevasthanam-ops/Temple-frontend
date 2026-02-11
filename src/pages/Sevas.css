@@ -1,0 +1,213 @@
+/* ================= VARIABLES ================= */
+:root {
+  --deep-red: #8B0000;
+  --gold: #f5c542;
+  --gold-hover: #ffe082;
+  --cream-bg: #fdfbf7;
+  --dark-blue: #061a3a;
+  --font-title: 'Cinzel', serif;
+  --font-text: 'Lora', serif;
+}
+
+/* ================= PAGE WRAPPER ================= */
+.sevas-page-wrapper {
+  background-color: var(--cream-bg);
+  background-image: radial-gradient(#ffe0b2 1px, transparent 1px);
+  background-size: 20px 20px;
+  min-height: 100vh;
+  font-family: var(--font-text);
+  padding-bottom: 60px;
+}
+
+/* ================= HEADER ================= */
+.devotional-header {
+  font-family: var(--font-title);
+  color: var(--deep-red);
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.header-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+.header-divider::before,
+.header-divider::after {
+  content: "";
+  height: 2px;
+  width: 80px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+}
+
+.om-symbol {
+  font-size: 2.5rem;
+  color: #d35400; 
+  margin: 0 20px;
+}
+
+.devotional-subtitle {
+  color: #555;
+  font-style: italic;
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ================= DATE PICKER ================= */
+.date-selection-wrapper {
+  background: white;
+  max-width: 500px;
+  margin: 0 auto 50px;
+  padding: 20px 30px;
+  border-radius: 50px;
+  border: 2px solid var(--gold);
+  box-shadow: 0 5px 15px rgba(245, 197, 66, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.date-label {
+  font-family: var(--font-title);
+  color: var(--dark-blue);
+  font-weight: 700;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.devotional-date-input {
+  border: 1px solid #ccc;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-family: var(--font-text);
+  color: var(--dark-blue);
+  outline: none;
+  transition: border 0.3s;
+}
+
+.devotional-date-input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 5px rgba(245, 197, 66, 0.5);
+}
+
+/* ================= SEVAS GRID ================= */
+.sevas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ================= CARD DESIGN ================= */
+.seva-booking-card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  border: 1px solid #ffe0b2;
+  display: flex;
+  flex-direction: column;
+}
+
+.seva-booking-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(245, 197, 66, 0.2);
+  border-color: var(--gold);
+}
+
+.card-top-decor {
+  height: 6px;
+  background: linear-gradient(90deg, var(--gold), var(--deep-red));
+  width: 100%;
+}
+
+.card-body-custom {
+  padding: 30px;
+  text-align: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.seva-title {
+  font-family: var(--font-title);
+  color: var(--deep-red);
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.divider-small {
+  width: 40px;
+  height: 2px;
+  background: var(--gold);
+  margin: 0 auto 15px;
+}
+
+.seva-desc {
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 25px;
+  flex-grow: 1; 
+}
+
+.price-tag {
+  font-family: var(--font-title);
+  font-size: 1.8rem;
+  color: var(--dark-blue);
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.currency {
+  font-size: 1.2rem;
+  vertical-align: super;
+  color: var(--gold);
+}
+
+/* ================= BUTTON ================= */
+.book-now-btn {
+  background: linear-gradient(45deg, #d35400, #e67e22);
+  color: white;
+  font-family: var(--font-title);
+  font-weight: 700;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(211, 84, 0, 0.3);
+}
+
+.book-now-btn:hover {
+  background: linear-gradient(45deg, #e67e22, #f5c542);
+  transform: scale(1.02);
+  box-shadow: 0 6px 15px rgba(211, 84, 0, 0.4);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .date-selection-wrapper {
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 15px;
+  }
+  
+  .devotional-header {
+    font-size: 2rem;
+  }
+}

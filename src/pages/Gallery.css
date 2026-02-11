@@ -1,0 +1,177 @@
+/* ================= VARIABLES ================= */
+:root {
+  --deep-red: #8B0000;
+  --gold: #f5c542;
+  --cream-bg: #fdfbf7;
+  --dark-blue: #061a3a;
+  --font-title: 'Cinzel', serif;
+  --font-text: 'Lato', sans-serif;
+}
+
+/* ================= PAGE WRAPPER ================= */
+.gallery-page-wrapper {
+  background-color: var(--cream-bg);
+  background-image: radial-gradient(#ffe0b2 1px, transparent 1px);
+  background-size: 20px 20px;
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+
+/* ================= HEADER ================= */
+.devotional-header {
+  font-family: var(--font-title);
+  color: var(--deep-red);
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.header-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+.header-divider::before,
+.header-divider::after {
+  content: "";
+  height: 2px;
+  width: 80px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+}
+
+.om-symbol {
+  font-size: 2.5rem;
+  color: #d35400;
+  margin: 0 20px;
+}
+
+.devotional-subtitle {
+  color: #666;
+  font-family: var(--font-text);
+  font-style: italic;
+}
+
+/* ================= MASONRY LAYOUT ================= */
+
+.gallery-masonry {
+  column-count: 3; 
+  column-gap: 20px;
+}
+
+.gallery-item {
+  break-inside: avoid; 
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+/* ================= IMAGE CARD ================= */
+.image-frame {
+  border: 4px solid white;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.image-frame:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(245, 197, 66, 0.3);
+  border-color: var(--gold);
+}
+
+.gallery-img {
+  width: 100%;
+  height: auto; 
+  display: block;
+  border-radius: 8px;
+}
+
+/* ================= HOVER OVERLAY ================= */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(6, 26, 58, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.image-frame:hover .overlay {
+  opacity: 1;
+}
+
+.view-text {
+  color: var(--gold);
+  font-family: var(--font-title);
+  font-weight: 700;
+  border: 1px solid var(--gold);
+  padding: 8px 20px;
+  border-radius: 20px;
+}
+
+/* ================= MODAL (POPUP) ================= */
+.gallery-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-content-wrapper {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.full-size-img {
+  max-width: 100%;
+  max-height: 90vh;
+  border: 4px solid var(--gold);
+  border-radius: 5px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.8);
+}
+
+.close-btn {
+  position: absolute;
+  top: -40px;
+  right: -10px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 992px) {
+  .gallery-masonry {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 576px) {
+  .gallery-masonry {
+    column-count: 1;
+  }
+  
+  .devotional-header {
+    font-size: 2rem;
+  }
+}

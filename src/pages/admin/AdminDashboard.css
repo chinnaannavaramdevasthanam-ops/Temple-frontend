@@ -1,0 +1,231 @@
+/* ================= VARIABLES ================= */
+:root {
+  --deep-red: #8B0000;
+  --gold: #f5c542;
+  --gold-light: #fff3cd;
+  --dark-blue: #061a3a;
+  --font-title: 'Cinzel', serif;
+  --font-text: 'Lato', sans-serif;
+}
+
+/* ================= PAGE LAYOUT ================= */
+.admin-page-wrapper {
+  background-color: white;
+  min-height: 100%;
+  padding: 20px;
+  border-radius: 8px;
+  font-family: var(--font-text);
+}
+
+.dashboard-header {
+  border-bottom: 2px solid #eee;
+  padding-bottom: 15px;
+}
+
+.admin-page-title {
+  font-family: var(--font-title);
+  color: var(--dark-blue);
+  font-weight: 700;
+  margin: 0;
+}
+
+.admin-subtitle {
+  color: #666;
+  font-size: 0.95rem;
+  margin-top: 5px;
+}
+
+.section-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-title {
+  font-family: var(--font-title);
+  color: var(--deep-red);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* ================= STATS CARDS GRID ================= */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 25px 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  border-left: 5px solid var(--dark-blue);
+  position: relative;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.highlight-card {
+  border-left-color: var(--gold);
+  background: linear-gradient(to right, #fff, #fffaf0);
+}
+
+.stat-label {
+  color: #888;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--dark-blue);
+  font-family: var(--font-title);
+}
+
+.stat-icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 2rem;
+  opacity: 0.2;
+}
+
+/* ================= TABLE STYLES (Matches AdminBookings) ================= */
+.table-container {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.devotional-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+}
+
+.devotional-table thead {
+  background-color: var(--dark-blue);
+  color: var(--gold);
+}
+
+.devotional-table th {
+  padding: 15px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.devotional-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  color: #333;
+  vertical-align: middle;
+}
+
+.text-primary-blue {
+  color: var(--dark-blue);
+}
+
+.amount-cell {
+  font-weight: 700;
+  color: var(--deep-red);
+}
+
+.mono-text {
+  font-family: monospace;
+  color: #555;
+  background: #f5f5f5;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* ================= STATUS BADGES ================= */
+.status-badge {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+.status-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.status-warning {
+  background-color: var(--gold-light);
+  color: #856404;
+  border: 1px solid #ffeeba;
+}
+
+.status-secondary {
+  background-color: #e2e3e5;
+  color: #383d41;
+}
+
+/* ================= ACTIONS ================= */
+.approve-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.approve-btn:hover {
+  background-color: #218838;
+}
+
+.gold-btn-outline {
+  background: transparent;
+  border: 2px solid var(--gold);
+  color: #d35400;
+  padding: 5px 15px;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.gold-btn-outline:hover {
+  background: var(--gold);
+  color: white;
+}
+
+/* ================= LOADING & EMPTY ================= */
+.admin-loading {
+  text-align: center;
+  padding: 50px;
+  color: var(--gold);
+}
+
+.empty-state-admin {
+  text-align: center;
+  padding: 40px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  color: #777;
+  font-style: italic;
+}

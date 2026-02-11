@@ -1,6 +1,7 @@
 import { useState } from "react";
 import api from "../services/api";
 import { useNavigate, Link } from "react-router-dom";
+import "./Register.css"; 
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -13,22 +14,23 @@ export default function Register() {
 
   const navigate = useNavigate();
 
-  const handleRegister = async () => {
+  const handleRegister = async (e) => {
+    e.preventDefault(); 
     setError("");
     setSuccess("");
 
     if (!name || !phone || !email || !password || !confirmPassword) {
-      setError("All fields are required");
+      setError("All fields are required.");
       return;
     }
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
+      setError("Passwords do not match.");
       return;
     }
 
     try {
-      const res = await api.post("/auth/register", {
+      await api.post("/auth/register", {
         name,
         phone,
         email,
@@ -36,74 +38,107 @@ export default function Register() {
         confirmPassword
       });
 
-      setSuccess("Registration successful. Please login.");
-      setTimeout(() => navigate("/login"), 1500);
+      setSuccess("Registration successful! Redirecting to login...");
+      setTimeout(() => navigate("/login"), 2000);
     } catch (err) {
-      setError(err.response?.data?.message || "Registration failed");
+      setError(err.response?.data?.message || "Registration failed. Please try again.");
     }
   };
 
   return (
-    <div className="col-md-4 mx-auto mt-4">
-      <h3 className="mb-3 text-center">Register</h3>
-
-      {error && (
-        <div className="alert alert-danger py-2">
-          {error}
+    <div className="register-page-wrapper">
+      <div className="register-card shadow-lg">
+        
+        {/* --- HEADER --- */}
+        <div className="text-center mb-4">
+          <h2 className="devotional-title-small">Create Account</h2>
+          <div className="divider-om">
+            <span className="om-symbol-small">ॐ</span>
+          </div>
+          <p className="register-subtitle">Join our spiritual community</p>
         </div>
-      )}
 
-      {success && (
-        <div className="alert alert-success py-2">
-          {success}
+        {/* --- ALERTS --- */}
+        {error && (
+          <div className="devotional-alert error">
+            {error}
+          </div>
+        )}
+
+        {success && (
+          <div className="devotional-alert success">
+            {success}
+          </div>
+        )}
+
+        {/* --- FORM --- */}
+        <form onSubmit={handleRegister}>
+          <div className="form-group mb-3">
+            <label className="input-label">Full Name</label>
+            <input
+              className="devotional-input"
+              placeholder="e.g. Siva Kumar"
+              value={name}
+              onChange={e => setName(e.target.value)}
+            />
+          </div>
+
+          <div className="form-group mb-3">
+            <label className="input-label">Phone Number</label>
+            <input
+              className="devotional-input"
+              placeholder="e.g. 98765 43210"
+              value={phone}
+              onChange={e => setPhone(e.target.value)}
+            />
+          </div>
+
+          <div className="form-group mb-3">
+            <label className="input-label">Email Address</label>
+            <input
+              className="devotional-input"
+              type="email"
+              placeholder="e.g. devotee@example.com"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+            />
+          </div>
+
+          <div className="row">
+            <div className="col-md-6 form-group mb-3">
+              <label className="input-label">Password</label>
+              <input
+                className="devotional-input"
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+              />
+            </div>
+            <div className="col-md-6 form-group mb-4">
+              <label className="input-label">Confirm Password</label>
+              <input
+                className="devotional-input"
+                type="password"
+                placeholder="Confirm"
+                value={confirmPassword}
+                onChange={e => setConfirmPassword(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <button type="submit" className="gold-btn-solid w-100">
+            Register
+          </button>
+        </form>
+
+        {/* --- FOOTER LINKS --- */}
+        <div className="text-center mt-4 register-footer">
+          <Link to="/login" className="login-link">
+            Already have an account? <strong>Login here</strong>
+          </Link>
         </div>
-      )}
 
-      <input
-        className="form-control mb-2"
-        placeholder="Full Name"
-        value={name}
-        onChange={e => setName(e.target.value)}
-      />
-
-      <input
-        className="form-control mb-2"
-        placeholder="Phone Number"
-        value={phone}
-        onChange={e => setPhone(e.target.value)}
-      />
-
-      <input
-        className="form-control mb-2"
-        placeholder="Email"
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-      />
-
-      <input
-        className="form-control mb-2"
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-      />
-
-      <input
-        className="form-control mb-3"
-        type="password"
-        placeholder="Confirm Password"
-        value={confirmPassword}
-        onChange={e => setConfirmPassword(e.target.value)}
-      />
-
-      <button className="btn btn-danger w-100" onClick={handleRegister}>
-        Register
-      </button>
-
-      <div className="text-center mt-3">
-        <Link to="/login" className="small">
-          Already have an account? Login
-        </Link>
       </div>
     </div>
   );

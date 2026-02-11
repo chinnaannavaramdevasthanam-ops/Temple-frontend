@@ -59,7 +59,7 @@ export default function AdminLayout() {
 
         {/* TOP BAR */}
         <div className="border-bottom p-3 bg-light">
-          <h5 className="m-0">Sri Maha Lakshmi Temple – Admin</h5>
+          <h5 className="m-0">Sri Satyanarayana Swamy Temple – Admin</h5>
         </div>
 
         {/* PAGE CONTENT */}

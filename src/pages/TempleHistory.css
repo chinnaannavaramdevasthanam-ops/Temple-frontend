@@ -1,0 +1,156 @@
+/* Import Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Serif+Telugu:wght@400;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
+
+.history-page-wrapper {
+  background-color: #fdfbf7; 
+  background-image: radial-gradient(#ffe0b2 1px, transparent 1px);
+  background-size: 20px 20px;
+  min-height: 100vh;
+}
+
+/* --- TITLES --- */
+.devotional-title {
+  font-family: 'Cinzel', serif;
+  color: #8B0000; 
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.sub-title {
+  font-family: 'Lora', serif;
+  color: #d35400; 
+  font-style: italic;
+}
+
+.title-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+.title-divider::before,
+.title-divider::after {
+  content: "";
+  height: 2px;
+  width: 100px;
+  background: linear-gradient(to right, transparent, #f5c542, transparent);
+}
+
+.om-symbol {
+  font-size: 2rem;
+  color: #f5c542;
+  margin: 0 15px;
+}
+
+/* --- CARD DESIGN --- */
+.history-card {
+  background: #ffffff;
+  border: 2px solid #f5c542;
+  border-radius: 15px;
+  padding: 40px;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(139, 0, 0, 0.1);
+}
+
+/* Corner Decorations (Optional pseudo-elements for flair) */
+.history-card::before {
+  content: "";
+  position: absolute;
+  top: 10px; left: 10px; right: 10px; bottom: 10px;
+  border: 1px dashed #d35400;
+  border-radius: 10px;
+  pointer-events: none;
+}
+
+/* --- LANGUAGE HEADERS --- */
+.lang-header {
+  font-family: 'Cinzel', serif;
+  color: #061a3a;
+  border-bottom: 3px solid #f5c542;
+  display: inline-block;
+  padding-bottom: 5px;
+  margin-bottom: 25px;
+}
+
+/* --- CONTENT GRID (PC View) --- */
+/* This handles the "Reduce Size" request by putting text next to image */
+.content-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+  align-items: start;
+}
+
+.content-grid.reverse-grid {
+  grid-template-columns: 1fr 2fr;
+}
+
+/* --- TEXT STYLING --- */
+.text-content p {
+  font-family: 'Lora', 'Noto Serif Telugu', serif;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #333;
+  margin-bottom: 15px;
+  text-align: justify;
+}
+
+.text-content strong {
+  color: #8B0000;
+}
+
+/* --- IMAGE STYLING --- */
+.devotional-img {
+  width: 100%;
+  max-width: 300px; 
+  height: auto;
+  border-radius: 10px;
+  border: 4px solid #fff;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  display: block;
+  margin: 0 auto;
+}
+
+.img-caption {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+  font-style: italic;
+  margin-top: 8px;
+}
+
+.gold-separator {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, transparent, #f5c542, transparent);
+  margin: 40px 0;
+}
+
+/* --- RESPONSIVE MOBILE --- */
+@media (max-width: 768px) {
+  .history-card {
+    padding: 20px;
+  }
+  
+  .content-grid, 
+  .content-grid.reverse-grid {
+    grid-template-columns: 1fr; 
+  }
+  
+  .devotional-img {
+    max-width: 100%; 
+    margin-top: 20px;
+  }
+  
+  /* On mobile, put image above text for the second section for better flow */
+  .reverse-grid .image-content {
+    order: -1; 
+  }
+
+  .devotional-title {
+    font-size: 1.5rem;
+  }
+}

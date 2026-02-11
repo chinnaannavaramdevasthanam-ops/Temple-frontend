@@ -1,36 +1,58 @@
+import { Link } from "react-router-dom";
+import "./Footer.css"; 
+
 export default function Footer() {
   return (
-    <footer
-      className="text-white mt-5"
-      style={{ background: "#1f3556" }}
-    >
-      <div className="container py-4">
-        <div className="row">
+    <footer className="temple-footer">
+      <div className="container py-5">
+        <div className="row text-center text-md-start align-items-center">
 
-          <div className="col-md-4">
-            <h6>QUICK LINKS</h6>
-            <p>Home</p>
-            <p>Sevas</p>
-            <p>Gallery</p>
+          {/* --- COLUMN 1: QUICK LINKS --- */}
+          <div className="col-md-4 mb-4 mb-md-0">
+            <h6 className="footer-title">Quick Links</h6>
+            <ul className="footer-links">
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/sevas">Seva Booking</Link></li>
+              <li><Link to="/gallery">Gallery</Link></li>
+              <li><Link to="/donate">Donate</Link></li>
+            </ul>
           </div>
 
-          <div className="col-md-4 text-center">
-            <img src="/home/temple-logo.png" height="50" />
-            <p className="mt-2">Sri Maha Lakshmi Temple</p>
+          {/* --- COLUMN 2: LOGO & BRAND --- */}
+          <div className="col-md-4 mb-4 mb-md-0 text-center">
+            <div className="footer-logo-wrapper">
+              <img src="/home/temple-logo.png" alt="Temple Logo" className="footer-logo" />
+            </div>
+            <h5 className="footer-brand">Sri Satyanarayana<br/>Swamy Temple</h5>
+            <p className="footer-tagline">|| Om Namo Narayanaya ||</p>
           </div>
 
+          {/* --- COLUMN 3: CONTACT --- */}
           <div className="col-md-4">
-            <h6>CONTACT US</h6>
-            <p>Email: info@srimahalakshmi.org</p>
-            <p>Phone: +91 XXXXX XXXXX</p>
+            <h6 className="footer-title">Contact Us</h6>
+            <div className="contact-info">
+              <p>
+                <strong>Email:</strong><br/>
+                <a href="mailto:chinnaannavaramdevasthanam@gmail.com" className="contact-link">
+                  chinnaannavaramdevasthanam@gmail.com
+                </a>
+              </p>
+              <p>
+                <strong>Phone:</strong><br/>
+                <span className="contact-number">+91 99999 99999</span>
+              </p>
+            </div>
           </div>
 
         </div>
 
-        <hr />
-        <p className="text-center mb-0">
-          © 2024 Sri Maha Lakshmi Temple. All rights reserved.
-        </p>
+        <hr className="footer-divider" />
+
+        {/* --- COPYRIGHT --- */}
+        <div className="text-center copyright-text">
+          <p>© {new Date().getFullYear()} SRI SATYANARAYANA SWAMY TEMPLE. All rights reserved.</p>
+          <p className="dev-credits">Designed with Devotion</p>
+        </div>
       </div>
     </footer>
   );

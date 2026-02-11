@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../../services/api";
+import "./AdminUsers.css"; 
 
 export default function AdminUsers() {
   const [users, setUsers] = useState([]);
@@ -7,10 +8,11 @@ export default function AdminUsers() {
 
   const loadUsers = async () => {
     try {
+      setLoading(true);
       const res = await api.get("/admin/users");
       setUsers(res.data);
     } catch {
-      alert("Failed to load users");
+      alert("Failed to load users list");
     } finally {
       setLoading(false);
     }
@@ -20,42 +22,71 @@ export default function AdminUsers() {
     loadUsers();
   }, []);
 
-  if (loading) return <p>Loading users...</p>;
+  if (loading) {
+    return (
+      <div className="admin-loading">
+        <div className="spinner-border text-gold" role="status"></div>
+        <p>Loading Devotee Directory...</p>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      <h4 className="mb-3">All Users</h4>
+    <div className="admin-page-wrapper">
+      
+      {/* --- HEADER --- */}
+      <div className="admin-header-row mb-4">
+        <div>
+          <h2 className="admin-page-title">Registered Users</h2>
+          <p className="admin-subtitle">Directory of all devotees and admins</p>
+        </div>
+        <div className="header-actions">
+           <span className="count-badge">Total: {users.length}</span>
+           <button className="gold-btn-outline" onClick={loadUsers}>
+             Refresh List
+           </button>
+        </div>
+      </div>
 
+      {/* --- USERS TABLE --- */}
       {users.length === 0 ? (
-        <p className="text-muted">No users found</p>
+        <div className="empty-state-admin">
+          <p>No registered users found.</p>
+        </div>
       ) : (
-        <div className="table-responsive">
-          <table className="table table-bordered table-hover align-middle">
-            <thead className="table-light">
+        <div className="table-container shadow-sm">
+          <table className="devotional-table">
+            <thead>
               <tr>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Email</th>
+                <th>Devotee Name</th>
+                <th>Phone Number</th>
+                <th>Email Address</th>
                 <th>Role</th>
-                <th>Joined</th>
+                <th>Joined On</th>
               </tr>
             </thead>
             <tbody>
-              {users.map(u => (
+              {users.map((u) => (
                 <tr key={u.id}>
-                  <td>{u.name}</td>
-                  <td>{u.phone}</td>
+                  <td className="fw-bold text-primary-blue">{u.name}</td>
+                  <td className="mono-text">{u.phone}</td>
                   <td>{u.email}</td>
                   <td>
                     <span
-                      className={`badge ${
-                        u.role === "ADMIN" ? "bg-danger" : "bg-secondary"
+                      className={`role-badge ${
+                        u.role === "ADMIN" ? "role-admin" : "role-user"
                       }`}
                     >
                       {u.role}
                     </span>
                   </td>
-                  <td>{new Date(u.createdAt).toLocaleDateString()}</td>
+                  <td>
+                    {new Date(u.createdAt).toLocaleDateString("en-IN", {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                    })}
+                  </td>
                 </tr>
               ))}
             </tbody>

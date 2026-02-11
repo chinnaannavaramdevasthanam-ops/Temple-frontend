@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../../services/api";
+import "./AdminBookings.css"; // Ensure this file is created
 
 export default function AdminBookings() {
   const [bookings, setBookings] = useState([]);
@@ -21,45 +22,67 @@ export default function AdminBookings() {
   }, []);
 
   if (loading) {
-    return <p>Loading bookings...</p>;
+    return (
+      <div className="admin-loading">
+        <div className="spinner-border text-gold" role="status"></div>
+        <p>Loading records...</p>
+      </div>
+    );
   }
 
   return (
-    <div>
-      <h4 className="mb-3">All Seva Bookings</h4>
+    <div className="admin-page-wrapper">
+      <div className="admin-header-row">
+        <div>
+          <h2 className="admin-page-title">All Seva Bookings</h2>
+          <p className="admin-subtitle">Manage devotee reservations</p>
+        </div>
+        <button className="gold-btn-outline" onClick={loadBookings}>
+          Refresh Data
+        </button>
+      </div>
 
       {bookings.length === 0 ? (
-        <p className="text-muted">No bookings yet</p>
+        <div className="empty-state-admin">
+          <p>No bookings found in the system.</p>
+        </div>
       ) : (
-        <div className="table-responsive">
-          <table className="table table-bordered table-hover align-middle">
-            <thead className="table-light">
+        <div className="table-container shadow-sm">
+          <table className="devotional-table">
+            <thead>
               <tr>
-                <th>User</th>
+                <th>Devotee Name</th>
                 <th>Phone</th>
                 <th>Email</th>
-                <th>Seva</th>
-                <th>Date</th>
+                <th>Seva Name</th>
+                <th>Seva Date</th>
                 <th>Status</th>
               </tr>
             </thead>
-
             <tbody>
-              {bookings.map(b => (
+              {bookings.map((b) => (
                 <tr key={b.id}>
-                  <td>{b.user.name}</td>
-                  <td>{b.user.phone}</td>
-                  <td>{b.user.email}</td>
-                  <td>{b.seva.name}</td>
-                  <td>{new Date(b.date).toLocaleDateString()}</td>
+                  <td className="fw-bold text-primary-blue">
+                    {b.user?.name || "N/A"}
+                  </td>
+                  <td>{b.user?.phone || "N/A"}</td>
+                  <td>{b.user?.email || "N/A"}</td>
+                  <td className="seva-name-cell">{b.seva?.name || "N/A"}</td>
+                  <td>
+                    {new Date(b.date).toLocaleDateString("en-IN", {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                    })}
+                  </td>
                   <td>
                     <span
-                      className={`badge ${
+                      className={`status-badge ${
                         b.status === "CONFIRMED"
-                          ? "bg-success"
+                          ? "status-success"
                           : b.status === "PENDING"
-                          ? "bg-warning"
-                          : "bg-secondary"
+                          ? "status-warning"
+                          : "status-secondary"
                       }`}
                     >
                       {b.status}
