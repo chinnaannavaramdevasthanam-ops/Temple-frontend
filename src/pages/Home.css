@@ -160,7 +160,8 @@
   font-size: 1.2rem;
   font-weight: 700;
   color: #061a3a;
-  border-top: 1px solid #eee;
+  /* FIX: REMOVED BORDER-TOP TO REMOVE THE LINE */
+  border-top: none; 
   padding-top: 15px;
 }
 

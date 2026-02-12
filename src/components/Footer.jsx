@@ -21,7 +21,7 @@ export default function Footer() {
           {/* --- COLUMN 2: LOGO & BRAND --- */}
           <div className="col-md-4 mb-4 mb-md-0 text-center">
             <div className="footer-logo-wrapper">
-              <img src="/home/temple-logo.png" alt="Temple Logo" className="footer-logo" />
+              <img src="/home/temple-logo.webp" alt="Temple Logo" className="footer-logo" />
             </div>
             <h5 className="footer-brand">Sri Satyanarayana<br/>Swamy Temple</h5>
             <p className="footer-tagline">|| Om Namo Narayanaya ||</p>

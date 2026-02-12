@@ -36,7 +36,7 @@ export default function TempleHistory() {
                 </p>
               </div>
               <div className="image-content">
-                 <img src="/home/history1.jpg" alt="Temple Founder" className="devotional-img" />
+                 <img src="/home/history1.webp" alt="Temple Founder" className="devotional-img" />
                  <p className="img-caption">శ్రీ సురేష్ కొండేటి (ఆలయ ధర్మకర్త)</p>
               </div>
             </div>

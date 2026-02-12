@@ -3,6 +3,7 @@ import { useEffect } from "react";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import ScrollToTop from "./components/ScrollToTop";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -26,7 +27,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
 
-  
   useEffect(() => {
     const handleBeforeUnload = () => {
       localStorage.removeItem("token");
@@ -42,8 +42,11 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="app-wrapper">
 
+      {/* 🔥 SCROLL RESET HANDLER */}
+      <ScrollToTop />
+
+      <div className="app-wrapper">
         <Navbar />
 
         <div className="main-content">
@@ -96,8 +99,8 @@ function App() {
         </div>
 
         <Footer />
-
       </div>
+
     </BrowserRouter>
   );
 }

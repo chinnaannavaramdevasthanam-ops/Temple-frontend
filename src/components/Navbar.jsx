@@ -1,5 +1,5 @@
 import { NavLink, Link, useNavigate } from "react-router-dom";
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FaVolumeUp, FaVolumeMute, FaBars, FaTimes } from "react-icons/fa";
 import "./Navbar.css";
 
@@ -8,32 +8,41 @@ export default function Navbar() {
   const role = localStorage.getItem("role");
   const navigate = useNavigate();
 
-  const audioRef = useRef(null);
+  // FIX: Use JavaScript Audio object instead of HTML tag to prevent "ghost lines"
+  const [audio] = useState(new Audio("/audio/om-namo-lakshmi-namah.mp3"));
   const [isPlaying, setIsPlaying] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const playAudio = async () => {
-      if (audioRef.current) {
-        audioRef.current.volume = 0.4;
-        try {
-          await audioRef.current.play();
+    // Configure audio
+    audio.loop = true;
+    audio.volume = 0.4;
+
+    // Auto-play attempt
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
           setIsPlaying(true);
-        } catch (err) {
-          console.log("Autoplay prevented. User interaction required.");
+        })
+        .catch((error) => {
+          console.log("Autoplay prevented by browser:", error);
           setIsPlaying(false);
-        }
-      }
+        });
+    }
+
+    // Cleanup when component unmounts (rare for Navbar, but good practice)
+    return () => {
+      audio.pause();
     };
-    playAudio();
-  }, []);
+  }, [audio]);
 
   const toggleAudio = () => {
-    if (audioRef.current.paused) {
-      audioRef.current.play();
+    if (audio.paused) {
+      audio.play();
       setIsPlaying(true);
     } else {
-      audioRef.current.pause();
+      audio.pause();
       setIsPlaying(false);
     }
   };
@@ -46,16 +55,14 @@ export default function Navbar() {
 
   return (
     <>
-      <audio ref={audioRef} loop>
-        <source src="/audio/om-namo-lakshmi-namah.mp3" type="audio/mpeg" />
-      </audio>
+      {/* NO AUDIO TAG HERE - Keeps the layout clean */}
 
       <nav className="temple-navbar">
         <div className="nav-container">
           
           {/* --- LEFT: LOGO & NAME --- */}
           <Link to="/" className="nav-brand" onClick={() => setMenuOpen(false)}>
-            <img src="/home/temple-logo.png" alt="Temple Logo" />
+            <img src="/home/temple-logo.webp" alt="Temple Logo" />
             <div className="brand-text">
               <span className="brand-title">Sri Satyanarayana</span>
               <span className="brand-subtitle">Swamy Temple</span>

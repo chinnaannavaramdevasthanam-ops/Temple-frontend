@@ -14,9 +14,10 @@ export default function Home() {
       <section className="hero-section">
         <div className="hero-frame">
           <img
-            src="/home/img1.png"
+            src="/home/img1.webp"
             alt="Sri Satyanarayana Swamy Temple"
             className="hero-image"
+            fetchpriority="high"
           />
           <div className="hero-overlay-text">
             <h1>Sri Satyanarayana Swamy Temple</h1>
@@ -37,9 +38,9 @@ export default function Home() {
 
         <div className="popular-sevas-grid">
           {[
-            { img: "/home/archana.jpg", name: "Archana" },
-            { img: "/home/abhishekam.jpg", name: "Abhishekam" },
-            { img: "/home/satyanarayana.jpg", name: "Satyanarayana Vratam" },
+            { img: "/home/archana.webp", name: "Archana" },
+            { img: "/home/abhishekam.webp", name: "Abhishekam" },
+            { img: "/home/satyanarayana.webp", name: "Satyanarayana Vratam" },
           ].map((s, i) => (
             <div className="seva-card" key={i}>
               <div className="img-container">
@@ -74,7 +75,7 @@ export default function Home() {
           </div>
           <div className="history-image-wrapper">
              <img
-              src="/home/history.jpg"
+              src="/home/history1.webp"
               alt="Temple History"
               className="history-preview-img"
             />
