@@ -10,7 +10,7 @@
 
 /* ================= PAGE WRAPPER ================= */
 .login-page-wrapper {
-  min-height: 85vh; /* Centers vertically */
+  min-height: 85vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -27,7 +27,7 @@
   max-width: 450px;
   padding: 40px;
   border-radius: 15px;
-  border: 2px solid #ffe0b2; /* Subtle gold border */
+  border: 2px solid #ffe0b2; 
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   position: relative;
 }
