@@ -32,7 +32,7 @@ const role = user?.role;
     audio.loop = true;
     audio.volume = 0.4; 
   
-
+if (loading) return null;
     
     return () => {
       audio.pause();
@@ -130,7 +130,7 @@ const logout = async () => {
   );
 }
 
-function NavItem({ to, label, closeMenu }) {if (loading) return null;
+function NavItem({ to, label, closeMenu }) {
 
   return (
     <li>
