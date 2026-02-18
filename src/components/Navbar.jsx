@@ -30,7 +30,7 @@ const role = user?.role;
     audio.volume = 0.4;
 
     // Auto-play attempt
-    const playPromise = audio.play();
+    
     if (playPromise !== undefined) {
       playPromise
         .then(() => {
