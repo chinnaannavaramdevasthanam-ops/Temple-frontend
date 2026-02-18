@@ -6,12 +6,15 @@ import "./Navbar.css";
 
 export default function Navbar() {
   const [user, setUser] = useState(null);
+const [loading, setLoading] = useState(true);
 
 useEffect(() => {
   api.get("/auth/me")
     .then(res => setUser(res.data))
-    .catch(() => setUser(null));
+    .catch(() => setUser(null))
+    .finally(() => setLoading(false));
 }, []);
+
 
 const token = user;
 const role = user?.role;
@@ -58,6 +61,7 @@ const logout = async () => {
 
   return (
     <>
+    
       {/* NO AUDIO TAG HERE - Keeps the layout clean */}
 
       <nav className="temple-navbar">
@@ -126,7 +130,8 @@ const logout = async () => {
   );
 }
 
-function NavItem({ to, label, closeMenu }) {
+function NavItem({ to, label, closeMenu }) {if (loading) return null;
+
   return (
     <li>
       <NavLink
