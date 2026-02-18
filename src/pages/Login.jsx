@@ -21,9 +21,11 @@ export default function Login() {
     try {
       const res = await api.post("/auth/login", { email, password });
 
-      // Save token
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("role", res.data.role);
+    if (res.data.role === "ADMIN") {
+  navigate("/admin");
+} else {
+  navigate("/");
+}
 
       // Redirect based on role
       if (res.data.role === "ADMIN") {

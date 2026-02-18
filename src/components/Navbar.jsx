@@ -1,11 +1,22 @@
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { FaVolumeUp, FaVolumeMute, FaBars, FaTimes } from "react-icons/fa";
+import api from "../services/api";
 import "./Navbar.css";
 
 export default function Navbar() {
-  const token = localStorage.getItem("token");
-  const role = localStorage.getItem("role");
+  const [user, setUser] = useState(null);
+
+useEffect(() => {
+  api.get("/auth/me")
+    .then(res => setUser(res.data))
+    .catch(() => setUser(null));
+}, []);
+
+const token = user;
+const role = user?.role;
+
+
   const navigate = useNavigate();
 
   // FIX: Use JavaScript Audio object instead of HTML tag to prevent "ghost lines"
@@ -47,11 +58,15 @@ export default function Navbar() {
     }
   };
 
-  const logout = () => {
-    localStorage.clear();
-    navigate("/");
-    setMenuOpen(false);
-  };
+const logout = async () => {
+  try {
+    await api.post("/auth/logout");
+  } catch {}
+  setUser(null);
+  navigate("/");
+  setMenuOpen(false);
+};
+
 
   return (
     <>
