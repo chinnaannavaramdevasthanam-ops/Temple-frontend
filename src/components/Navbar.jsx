@@ -27,22 +27,10 @@ const role = user?.role;
   useEffect(() => {
     // Configure audio
     audio.loop = true;
-    audio.volume = 0.4;
+    audio.volume = 0.4; 
+  
 
-    // Auto-play attempt
     
-    if (playPromise !== undefined) {
-      playPromise
-        .then(() => {
-          setIsPlaying(true);
-        })
-        .catch((error) => {
-          console.log("Autoplay prevented by browser:", error);
-          setIsPlaying(false);
-        });
-    }
-
-    // Cleanup when component unmounts (rare for Navbar, but good practice)
     return () => {
       audio.pause();
     };
