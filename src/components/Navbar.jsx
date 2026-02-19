@@ -9,9 +9,9 @@ export default function Navbar() {
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
-  const location = useLocation(); // 🔥 detect route change
+  const location = useLocation();
 
-  // 🔥 Fetch user whenever route changes
+  // 🔥 Fetch user but DO NOT block UI
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -25,7 +25,7 @@ export default function Navbar() {
     };
 
     fetchUser();
-  }, [location.pathname]); // 🔥 this is the fix
+  }, [location.pathname]);
 
   const role = user?.role;
 
@@ -62,8 +62,6 @@ export default function Navbar() {
     setMenuOpen(false);
   };
 
-  if (loading) return null;
-
   return (
     <nav className="temple-navbar">
       <div className="nav-container">
@@ -85,7 +83,8 @@ export default function Navbar() {
             <NavItem to="/sevas" label="Seva Booking" closeMenu={() => setMenuOpen(false)} />
             <NavItem to="/gallery" label="Gallery" closeMenu={() => setMenuOpen(false)} />
 
-            {user && role === "ADMIN" && (
+            {/* Show Admin only after user loaded */}
+            {!loading && user && role === "ADMIN" && (
               <NavItem to="/admin" label="Admin" closeMenu={() => setMenuOpen(false)} />
             )}
           </ul>
@@ -97,7 +96,7 @@ export default function Navbar() {
               <span>{isPlaying ? "Mute" : "Unmute"}</span>
             </button>
 
-            {!user ? (
+            {!loading && !user ? (
               <Link
                 to="/login"
                 className="auth-btn mobile-only"
@@ -105,11 +104,11 @@ export default function Navbar() {
               >
                 Login
               </Link>
-            ) : (
+            ) : !loading && user ? (
               <button className="logout-btn mobile-only" onClick={logout}>
                 Logout
               </button>
-            )}
+            ) : null}
           </div>
         </div>
 
@@ -119,15 +118,15 @@ export default function Navbar() {
             {isPlaying ? <FaVolumeUp /> : <FaVolumeMute />}
           </button>
 
-          {!user ? (
+          {!loading && !user ? (
             <NavLink to="/login" className="auth-btn desktop-only">
               Login / Signup
             </NavLink>
-          ) : (
+          ) : !loading && user ? (
             <button className="logout-btn desktop-only" onClick={logout}>
               Logout
             </button>
-          )}
+          ) : null}
 
           <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
             {menuOpen ? <FaTimes /> : <FaBars />}
