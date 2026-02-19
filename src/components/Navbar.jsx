@@ -1,4 +1,4 @@
-import { NavLink, Link, useNavigate } from "react-router-dom";
+import { NavLink, Link, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { FaVolumeUp, FaVolumeMute, FaBars, FaTimes } from "react-icons/fa";
 import api from "../services/api";
@@ -6,34 +6,37 @@ import "./Navbar.css";
 
 export default function Navbar() {
   const [user, setUser] = useState(null);
-const [loading, setLoading] = useState(true);
-
-useEffect(() => {
-  api.get("/auth/me")
-    .then(res => setUser(res.data))
-    .catch(() => setUser(null))
-    .finally(() => setLoading(false));
-}, []);
-
-
-const token = user;
-const role = user?.role;
-
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
+  const location = useLocation(); // 🔥 detect route change
 
-  // FIX: Use JavaScript Audio object instead of HTML tag to prevent "ghost lines"
+  // 🔥 Fetch user whenever route changes
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await api.get("/auth/me");
+        setUser(res.data);
+      } catch {
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, [location.pathname]); // 🔥 this is the fix
+
+  const role = user?.role;
+
   const [audio] = useState(new Audio("/audio/om-namo-lakshmi-namah.mp3"));
   const [isPlaying, setIsPlaying] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    // Configure audio
     audio.loop = true;
-    audio.volume = 0.4; 
-  
-if (loading) return null;
-    
+    audio.volume = 0.4;
+
     return () => {
       audio.pause();
     };
@@ -49,96 +52,103 @@ if (loading) return null;
     }
   };
 
-const logout = async () => {
-  try {
-    await api.post("/auth/logout");
-  } catch (error){console.error("Logout failed", error);}
-  setUser(null);
-  navigate("/");
-  setMenuOpen(false);
-};
+  const logout = async () => {
+    try {
+      await api.post("/auth/logout");
+    } catch (error) {}
 
+    setUser(null);
+    navigate("/");
+    setMenuOpen(false);
+  };
+
+  if (loading) return null;
 
   return (
-    <>
-    
-      {/* NO AUDIO TAG HERE - Keeps the layout clean */}
+    <nav className="temple-navbar">
+      <div className="nav-container">
 
-      <nav className="temple-navbar">
-        <div className="nav-container">
-          
-          {/* --- LEFT: LOGO & NAME --- */}
-          <Link to="/" className="nav-brand" onClick={() => setMenuOpen(false)}>
-            <img src="/home/temple-logo.webp" alt="Temple Logo" />
-            <div className="brand-text">
-              <span className="brand-title">Sri Satyanarayana</span>
-              <span className="brand-subtitle">Swamy Temple</span>
-            </div>
-          </Link>
-
-          {/* --- CENTER: LINKS --- */}
-          <div className={`nav-menu-wrapper ${menuOpen ? "active" : ""}`}>
-            <ul className="nav-links">
-              <NavItem to="/" label="Home" closeMenu={() => setMenuOpen(false)} />
-              <NavItem to="/donate" label="Donate" closeMenu={() => setMenuOpen(false)} />
-              <NavItem to="/sevas" label="Seva Booking" closeMenu={() => setMenuOpen(false)} />
-              <NavItem to="/gallery" label="Gallery" closeMenu={() => setMenuOpen(false)} />
-              
-              {token && role === "ADMIN" && (
-                <NavItem to="/admin" label="Admin" closeMenu={() => setMenuOpen(false)} />
-              )}
-            </ul>
-
-            {/* Mobile-Only Auth/Audio Controls */}
-            <div className="mobile-controls">
-               <button className="sound-btn mobile-only" onClick={toggleAudio}>
-                  {isPlaying ? <FaVolumeUp /> : <FaVolumeMute />} <span>{isPlaying ? "Mute" : "Unmute"}</span>
-               </button>
-               {!token ? (
-                <Link to="/login" className="auth-btn mobile-only" onClick={() => setMenuOpen(false)}>Login</Link>
-               ) : (
-                <button className="logout-btn mobile-only" onClick={logout}>Logout</button>
-               )}
-            </div>
+        {/* --- LEFT: LOGO & NAME --- */}
+        <Link to="/" className="nav-brand" onClick={() => setMenuOpen(false)}>
+          <img src="/home/temple-logo.webp" alt="Temple Logo" />
+          <div className="brand-text">
+            <span className="brand-title">Sri Satyanarayana</span>
+            <span className="brand-subtitle">Swamy Temple</span>
           </div>
+        </Link>
 
-          {/* --- RIGHT: ACTIONS (Desktop) --- */}
-          <div className="nav-actions">
-            <button className="sound-btn desktop-only" onClick={toggleAudio}>
+        {/* --- CENTER: LINKS --- */}
+        <div className={`nav-menu-wrapper ${menuOpen ? "active" : ""}`}>
+          <ul className="nav-links">
+            <NavItem to="/" label="Home" closeMenu={() => setMenuOpen(false)} />
+            <NavItem to="/donate" label="Donate" closeMenu={() => setMenuOpen(false)} />
+            <NavItem to="/sevas" label="Seva Booking" closeMenu={() => setMenuOpen(false)} />
+            <NavItem to="/gallery" label="Gallery" closeMenu={() => setMenuOpen(false)} />
+
+            {user && role === "ADMIN" && (
+              <NavItem to="/admin" label="Admin" closeMenu={() => setMenuOpen(false)} />
+            )}
+          </ul>
+
+          {/* Mobile Controls */}
+          <div className="mobile-controls">
+            <button className="sound-btn mobile-only" onClick={toggleAudio}>
               {isPlaying ? <FaVolumeUp /> : <FaVolumeMute />}
+              <span>{isPlaying ? "Mute" : "Unmute"}</span>
             </button>
 
-            {!token ? (
-              <NavLink to="/login" className="auth-btn desktop-only">
-                Login / Signup
-              </NavLink>
+            {!user ? (
+              <Link
+                to="/login"
+                className="auth-btn mobile-only"
+                onClick={() => setMenuOpen(false)}
+              >
+                Login
+              </Link>
             ) : (
-              <button className="logout-btn desktop-only" onClick={logout}>
+              <button className="logout-btn mobile-only" onClick={logout}>
                 Logout
               </button>
             )}
-
-            {/* Hamburger Toggle */}
-            <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
-              {menuOpen ? <FaTimes /> : <FaBars />}
-            </button>
           </div>
-
         </div>
-      </nav>
-    </>
+
+        {/* --- RIGHT SIDE --- */}
+        <div className="nav-actions">
+          <button className="sound-btn desktop-only" onClick={toggleAudio}>
+            {isPlaying ? <FaVolumeUp /> : <FaVolumeMute />}
+          </button>
+
+          {!user ? (
+            <NavLink to="/login" className="auth-btn desktop-only">
+              Login / Signup
+            </NavLink>
+          ) : (
+            <button className="logout-btn desktop-only" onClick={logout}>
+              Logout
+            </button>
+          )}
+
+          <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
+            {menuOpen ? <FaTimes /> : <FaBars />}
+          </button>
+        </div>
+
+      </div>
+    </nav>
   );
 }
 
 function NavItem({ to, label, closeMenu }) {
-
   return (
     <li>
       <NavLink
         to={to}
         end={to === "/"}
         onClick={closeMenu}
-        className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
+        className={({ isActive }) =>
+          isActive ? "nav-link active" : "nav-link"
+        }
       >
         {label}
       </NavLink>
