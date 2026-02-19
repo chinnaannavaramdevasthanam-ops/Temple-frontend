@@ -52,7 +52,7 @@ if (loading) return null;
 const logout = async () => {
   try {
     await api.post("/auth/logout");
-  } catch {}
+  } catch (error){console.error("Logout failed", error);}
   setUser(null);
   navigate("/");
   setMenuOpen(false);

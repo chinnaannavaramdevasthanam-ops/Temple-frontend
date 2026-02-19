@@ -26,20 +26,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
-
-  useEffect(() => {
-    const handleBeforeUnload = () => {
-      localStorage.removeItem("token");
-      localStorage.removeItem("role");
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, []);
-
   return (
     <BrowserRouter>
 
